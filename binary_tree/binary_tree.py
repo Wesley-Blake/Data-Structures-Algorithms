@@ -1,15 +1,17 @@
-"""Binary Tree."""
+"""Binary tree implementation with a simple node class."""
 
 
 class Node:
-    """Node to Binary Tree."""
+    """Represent a node in a binary tree."""
 
     def __init__(self, value):
+        """Initialize a node with the provided value."""
         self.data = value
         self.left = None
         self.right = None
 
     def traverse(self) -> None:
+        """Print the node and its subtree in preorder traversal."""
         print(self.data, end=" ")
         if self.left:
             self.left.traverse()
@@ -18,13 +20,18 @@ class Node:
 
 
 class BinaryTree:
-    """Binary Tree implementation."""
+    """Binary tree implementation with sorted insertion behavior."""
 
     def __init__(self):
+        """Initialize an empty binary tree."""
         self.root = None
 
-    def append(self, value):
-        """Append new values to the left or right, lesser is left and vise versa."""
+    def __contains__(self, value) -> bool:
+        """Return True when the value exists in the tree."""
+        return isinstance(self.locate(value), int)
+
+    def append(self, value) -> None:
+        """Insert a value into the tree, placing smaller values to the left."""
         if self.root is None:
             self.root = Node(value)
             return
@@ -44,10 +51,11 @@ class BinaryTree:
             current_leaf = current_leaf.right
 
     def traverse(self) -> None:
-        """Recursive printing traversal."""
+        """Print the contents of the tree using preorder traversal."""
         self.root.traverse()
 
-    def locate(self, value) -> int:
+    def locate(self, value) -> int | None:
+        """Return the depth of the value if it exists, otherwise None."""
         if self.root is None:
             return
         current_leaf = self.root
@@ -56,13 +64,10 @@ class BinaryTree:
             if value == current_leaf.data:
                 return depth
             if value < current_leaf.data:
-                if current_leaf.left:
-                    current_leaf = current_leaf.left
-                    depth += 1
-                    continue
-                return 0
-            if current_leaf.right:
-                current_leaf = current_leaf.right
+                current_leaf = current_leaf.left
                 depth += 1
                 continue
-            return 0
+            current_leaf = current_leaf.right
+            depth += 1
+            continue
+        return
