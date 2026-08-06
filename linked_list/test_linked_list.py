@@ -1,5 +1,4 @@
 import pytest
-
 from linked_list.LinkedList import (
     LinkedListDouble,
     LinkedListQueue,
